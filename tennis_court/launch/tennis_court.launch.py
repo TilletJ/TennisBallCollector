@@ -38,6 +38,12 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration("gui"))
     )
 
+    static_tf_node = Node(
+        package="tf2_ros",
+        arguments=["0", "0", "5", "3.14159", "1.57079", "3.14159", "map", "zenith_camera_link"],
+        **{executable: "static_transform_publisher"}
+    )
+
     # Ball Manager
     ball_manager_node = Node(
         package="tennis_court",
@@ -65,6 +71,7 @@ def generate_launch_description():
         DeclareLaunchArgument(name="manager", default_value="true"),
         gzserver_launch,
         gzclient_launch,
+        static_tf_node,
         ball_manager_node,
         rviz_node
     ])

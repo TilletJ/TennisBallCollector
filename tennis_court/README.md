@@ -38,6 +38,9 @@ def generate_launch_description():
 - `gzclient` (Optionnel)  
   Le client Gazebo.
   
+- `static_transform_publisher`  
+  Publie une transformée statique entre la *frame* de référence `map` et celle de la caméra zénithale `zenith_camera_link`.
+  
 - `ball_manager` (Optionnel)  
   Le script `ball_manager.py`.
   

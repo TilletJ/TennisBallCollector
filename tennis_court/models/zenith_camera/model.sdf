@@ -3,7 +3,7 @@
     <model name="zenith_camera">
         <pose>0 0 0 0 0 0</pose>
         <static>true</static>
-        <link name="camera_link">
+        <link name="zenith_camera_link">
             <sensor name="zenith_camera" type="camera">
                 <always_on>1</always_on>
                 <update_rate>30</update_rate>
