@@ -3,23 +3,23 @@
 import os
 import rclpy
 import random
-
 import xacro
 from geometry_msgs.msg import Pose, Point, Twist, Vector3
-from rclpy.clock import ROSClock, Clock
+from rclpy.clock import Clock
 from rclpy.duration import Duration
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, HistoryPolicy, ReliabilityPolicy
 from gazebo_msgs.msg import ModelStates
 from gazebo_msgs.srv import SpawnEntity, DeleteEntity, SetEntityState
 from ament_index_python import get_package_share_directory
-from rclpy.time_source import TimeSource
 from tennis_court.msg import BallManagerStats
 
 
 class BallManager(Node):
 
     DELETE_BALL_DURATION = Duration(seconds=5.0)
+    SPAWN_BALL_DURATION = 10.0
+    TOTAL_BALL_COUNT = 10
 
     def __init__(self):
         super().__init__("ball_manager")
@@ -27,9 +27,6 @@ class BallManager(Node):
         self.ball_id = 0
         self.balls = dict()
         self.ball_description_file = os.path.join(get_package_share_directory("tennis_court"), "urdf", "ball.urdf.xacro")
-
-        self.clock = ROSClock()
-        self.time_source = TimeSource(node=self)
 
         # Ball manager stats publisher
         qos_profile = QoSProfile(
@@ -42,24 +39,26 @@ class BallManager(Node):
 
         # Spawn entity client
         self.spawn_entity_client = self.create_client(SpawnEntity, "/spawn_entity")
-        while not self.spawn_entity_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info("Service '/spawn_entity' not available, waiting...")
+        while not self.spawn_entity_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().warn("Service '/spawn_entity' not available, waiting...")
 
         # Delete entity client
         self.delete_entity_client = self.create_client(DeleteEntity, "/delete_entity")
-        while not self.delete_entity_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info("Service '/delete_entity' not available, waiting...")
+        while not self.delete_entity_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().warn("Service '/delete_entity' not available, waiting...")
 
         # Set entity state client
         self.set_entity_state_client = self.create_client(SetEntityState, "/set_entity_state")
-        while not self.set_entity_state_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info("Service '/set_entity_state' not available, waiting...")
+        while not self.set_entity_state_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().warn("Service '/set_entity_state' not available, waiting...")
 
         # Model states subscriber
         self.model_states_sub = self.create_subscription(ModelStates, "/model_states", self.on_model_states, 10)
 
         # Ball spawner timer
         self.timer = self.create_timer(5.0, self.spawn_ball)
+
+        self.get_logger().info("Ball manager initialized")
 
     def publish_stats(self):
         self.stats_pub.publish(BallManagerStats(
@@ -95,8 +94,8 @@ class BallManager(Node):
         ball.set_spawned(self.get_clock().now())
         self.publish_stats()
 
-        if len(self.balls) < 10:
-            self.timer = self.create_timer(10.0, self.spawn_ball)
+        if len(self.balls) < self.TOTAL_BALL_COUNT:
+            self.timer = self.create_timer(self.SPAWN_BALL_DURATION, self.spawn_ball)
 
     def on_model_states(self, model_states):
         """

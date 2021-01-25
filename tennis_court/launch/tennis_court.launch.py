@@ -43,6 +43,8 @@ def generate_launch_description():
         package="tennis_court",
         condition=IfCondition(LaunchConfiguration("manager")),
         parameters=[{"use_sim_time": True}],
+        output="screen",
+        emulate_tty=True,
         **{executable: "ball_manager.py"}
     )
 
