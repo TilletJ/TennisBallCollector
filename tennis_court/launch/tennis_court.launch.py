@@ -40,7 +40,7 @@ def generate_launch_description():
 
     static_tf_node = Node(
         package="tf2_ros",
-        arguments=["0", "0", "5", "3.14159", "1.57079", "3.14159", "map", "zenith_camera_link"],
+        arguments=["0", "0", "8", "3.14159", "1.57079", "3.14159", "map", "zenith_camera_link"],
         **{executable: "static_transform_publisher"}
     )
 

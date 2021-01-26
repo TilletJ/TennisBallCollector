@@ -17,7 +17,7 @@
             <uri>model://tennis_court</uri>
         </include>
         <include>
-            <pose>0 0 5 3.14159 1.57079 3.14159</pose>
+            <pose>0 0 8 3.14159 1.57079 3.14159</pose>
             <uri>model://zenith_camera</uri>
         </include>
 

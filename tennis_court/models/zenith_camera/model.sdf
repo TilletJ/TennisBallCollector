@@ -10,7 +10,7 @@
                 <visualize>false</visualize>
 
                 <camera name="zenith_camera">
-                    <horizontal_fov>2.6</horizontal_fov>
+                    <horizontal_fov>2.2</horizontal_fov>
                     <image>
                         <width>1280</width>
                         <height>720</height>
@@ -19,14 +19,6 @@
                         <near>0.02</near>
                         <far>300</far>
                     </clip>
-                    <distortion>
-                        <k1>-0.25</k1>
-                        <k2>-0.2</k2>
-                        <p1>0</p1>
-                        <p2>0</p2>
-                        <k3>0</k3>
-                        <center>0.5 0.5</center>
-                    </distortion>
                 </camera>
 
                 <plugin name="zenith_camera_controller" filename="libgazebo_ros_camera.so">
