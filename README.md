@@ -47,6 +47,7 @@ Consulter le [README](tennis_court/README.md) du package pour plus d'information
 Le dossier `docs` contient tous les documents utiles au projet:
 - Des [instructions pour utiliser Git](docs/GitWorkflow.md)
 - Un [Mémo pour ROS 2 et Gazebo](docs/Memo_ROS2.pdf)
+- Les [slides de la présentation Git](docs/GitPresentation.pdf)
 
 
 ### Rapports
