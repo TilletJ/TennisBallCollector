@@ -36,6 +36,12 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/BallManagerStats.msg"
 )
 
+add_library(AttachModelPlugin SHARED src/AttachModelPlugin.cc)
+ament_target_dependencies(AttachModelPlugin
+  "gazebo_dev"
+)
+ament_export_libraries(AttachModelPlugin)
+
 set (CMAKE_AUTOMOC ON)
 
 include_directories(SYSTEM ${GAZEBO_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Test_INCLUDE_DIRS})
@@ -63,6 +69,7 @@ ament_package()
 
 install(TARGETS
     gui_tennis_court_overlay
+    AttachModelPlugin
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
