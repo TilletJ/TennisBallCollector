@@ -7,5 +7,5 @@ int64 score
 int32 current_ball_count
 int32 total_ball_count
 uint8 game_status
-builtin_interfaces/Duration status_time_left
+float32 status_time_left
 bool robot_is_safe
