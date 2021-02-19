@@ -34,6 +34,7 @@ find_package(rmw_implementation_cmake REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/BallManagerStats.msg"
+  "msg/GameStatus.msg"
 )
 
 add_library(AttachModelPlugin SHARED src/AttachModelPlugin.cc)
