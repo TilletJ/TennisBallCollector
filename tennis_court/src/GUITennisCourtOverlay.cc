@@ -113,19 +113,19 @@ void GUITennisCourtOverlay::OnBallManagerStats(const tennis_court::msg::BallMana
   switch (_msg->game_status)
   {
     case tennis_court::msg::BallManagerStats::GAME_STARTING:
-      game_status.assign("starting");
+      game_status.assign("Starting");
       robot_safety.append(_msg->robot_is_safe ?
-      "<span style=\"color:green\";>Robot is safe</span>" : 
+      "<span style=\"color:#2bff00\";>Robot should stay in safe area</span>" : 
       "<span style=\"color:orange\";>Robot should reach safe area</span>");
       break;
     case tennis_court::msg::BallManagerStats::GAME_STARTED:
-      game_status.assign("started");
+      game_status.assign("Started");
       robot_safety.append(_msg->robot_is_safe ?
-      "<span style=\"color:green\";>Robot is safe</span>" : 
+      "<span style=\"color:#2bff00\";>Robot should stay in safe area</span>" : 
       "<span style=\"color:red\";>Robot should be in safe area</span>");
       break;
     case tennis_court::msg::BallManagerStats::GAME_PAUSED:
-      game_status.assign("paused");
+      game_status.assign("Paused");
       robot_safety.append("Robot is free to move");
       break;
     default:
